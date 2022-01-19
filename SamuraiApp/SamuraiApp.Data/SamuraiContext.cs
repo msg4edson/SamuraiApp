@@ -15,5 +15,16 @@ namespace SamuraiApp.Data
                 "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=SamuraiAppData");
             //"Data Source=DESKTOP-PBNLB3I;Initial Catalog=SamuraiAppData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Samurai>()
+                .HasMany(s => s.Battles)
+                .WithMany(b => b.Samurais)
+                .UsingEntity<BattleSamurai>
+                (bs => bs.HasOne<Battle>().WithMany(),
+                bs => bs.HasOne<Samurai>().WithMany())
+                .Property(bs => bs.DateJoined)
+                .HasDefaultValueSql("getdate()");
+        }
     }
 }
