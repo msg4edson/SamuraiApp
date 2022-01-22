@@ -13,27 +13,32 @@ namespace SamuraiApp.UI
 
         static void Main(string[] args)
         {
-            //_context.Database.EnsureCreated();
-            //GetSamurais("Before Add:");
-            //AddSamurai();
-            AddSamurais("Gustavo", "Gomes");
-            GetSamurais();
-            //GetSamurais("After Add:");
-            //GetSamurais("Show: ");
+            
+            AddSamuraisByName("Shimada", "Okamoto", "Kikuchio", "Hayashida");
+            //GetSamurais();
+            AddVariousTypes();
             Console.Write("Press any key...");
             Console.ReadKey();
         }
 
-        
-        //Add one at time
-        //private static void AddSamurai()
-        //{
-        //    var samurai = new Samurai { Name = "Edson" };
-        //    _context.Samurais.Add(samurai);
-        //    _context.SaveChanges();
-        //}
+        private static void AddVariousTypes()
+        {
+            _context.AddRange(
+                new Samurai { Name = "Shimada" },
+                new Samurai { Name = "Okamoto" },
+                new Battle { Name = "Battle of Anegawa" },
+                new Battle { Name = "Battle of Nagashino" });
+            //_context.Samurais.AddRange(
+            //    new Samurai { Name = "Shimada"},
+            //    new Samurai { Name = "Okamoto"}
+            //    );
+            //_context.Battles.AddRange(
+            //    new Battle { Name = "Battle of Anegawa"},
+            //    new Battle { Name = "Battle of Nagashino"});
+            _context.SaveChanges();
+        }
 
-        private static void AddSamurais(params string[] names)
+        private static void AddSamuraisByName(params string[] names)
         {
             foreach (string name in names)
             {
@@ -41,18 +46,6 @@ namespace SamuraiApp.UI
             }
             _context.SaveChanges();
         }
-
-        //One way to get all values
-        //private static void GetSamurais(string text)
-        //{
-        //    var samurais = _context.Samurais.ToList();
-        //    Console.WriteLine($"{text}: Samurai count is {samurais.Count}");
-        //    foreach(var samurai in samurais)
-        //    {
-        //        Console.WriteLine(samurai.Name);
-        //    }
-
-        //}
 
         private static void GetSamurais()
         {
@@ -65,7 +58,5 @@ namespace SamuraiApp.UI
                 Console.WriteLine(samurai.Name);
             }
         }
-
-
     }
 }

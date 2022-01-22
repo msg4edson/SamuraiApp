@@ -14,7 +14,8 @@ namespace SamuraiApp.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=SamuraiAppData")
+                "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=SamuraiAppData",
+                options=>options.MaxBatchSize(100))
                 .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name },
                 LogLevel.Information)
                 .EnableSensitiveDataLogging();
