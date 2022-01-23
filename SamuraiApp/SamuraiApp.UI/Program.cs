@@ -17,10 +17,16 @@ namespace SamuraiApp.UI
             //AddSamuraisByName("Shimada", "Okamoto", "Kikuchio", "Hayashida");
             //GetSamurais();
             //AddVariousTypes();
-            QueryFilters();
+            //QueryFilters();
+            //QueryAggregates();
+            //RetrieveAndUpdateSamurai();
+            //RetrieveAndUpdateMultipleSamurais();
+            MultipleDatabaseOperations();
             Console.Write("Press any key...");
             Console.ReadKey();
         }
+
+       
 
         private static void AddVariousTypes()
         {
@@ -72,6 +78,35 @@ namespace SamuraiApp.UI
                 Console.WriteLine(samurai.Name);
             }
                 Console.WriteLine(samurais.Count);
+        }
+
+        private static void QueryAggregates()
+        {
+            var name = "Sampson";
+            //var samurai = _context.Samurais.FirstOrDefault(s => s.Name == name);
+            var samurai = _context.Samurais.Find(2);
+        }
+
+        private static void RetrieveAndUpdateSamurai()
+        {
+            var samurai = _context.Samurais.FirstOrDefault();
+            samurai.Name += "San";
+            _context.SaveChanges();
+        }
+
+        private static void RetrieveAndUpdateMultipleSamurais()
+        {
+            var samurais = _context.Samurais.Skip(1).Take(4).ToList();
+            samurais.ForEach(s => s.Name += "_Don");
+            _context.SaveChanges();
+        }
+
+        private static void MultipleDatabaseOperations()
+        {
+            var samurai = _context.Samurais.FirstOrDefault();
+            samurai.Name += "Eds";
+            _context.Samurais.Add(new Samurai { Name = "Shino" });
+            _context.SaveChanges();
         }
     }
 }
